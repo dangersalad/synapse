@@ -9,7 +9,7 @@ services:
     build:
         context: ../..
         dockerfile: docker/Dockerfile
-    image: docker.io/matrixdotorg/synapse:latest
+    image: docker.io/dangersalad/synapse:latest
     # Since synapse does not retry to connect to the database, restart upon
     # failure
     restart: unless-stopped
@@ -29,26 +29,26 @@ services:
     # In order to expose Synapse, remove one of the following, you might for
     # instance expose the TLS port directly:
     ports:
-      - 8448:8448/tcp
+      - 8008:8008/tcp
     # ... or use a reverse proxy, here is an example for traefik:
-    labels:
+    # labels:
       # The following lines are valid for Traefik version 1.x:
-      - traefik.enable=true
-      - traefik.frontend.rule=Host:my.matrix.Host
-      - traefik.port=8008
+      # - traefik.enable=true
+      # - traefik.frontend.rule=Host:my.matrix.Host
+      # - traefik.port=8008
       # Alternatively, for Traefik version 2.0:
-      - traefik.enable=true
-      - traefik.http.routers.http-synapse.entryPoints=http
-      - traefik.http.routers.http-synapse.rule=Host(`my.matrix.host`)
-      - traefik.http.middlewares.https_redirect.redirectscheme.scheme=https
-      - traefik.http.middlewares.https_redirect.redirectscheme.permanent=true
-      - traefik.http.routers.http-synapse.middlewares=https_redirect
-      - traefik.http.routers.https-synapse.entryPoints=https
-      - traefik.http.routers.https-synapse.rule=Host(`my.matrix.host`)
-      - traefik.http.routers.https-synapse.service=synapse
-      - traefik.http.routers.https-synapse.tls=true
-      - traefik.http.services.synapse.loadbalancer.server.port=8008
-      - traefik.http.routers.https-synapse.tls.certResolver=le-ssl
+      # - traefik.enable=true
+      # - traefik.http.routers.http-synapse.entryPoints=http
+      # - traefik.http.routers.http-synapse.rule=Host(`my.matrix.host`)
+      # - traefik.http.middlewares.https_redirect.redirectscheme.scheme=https
+      # - traefik.http.middlewares.https_redirect.redirectscheme.permanent=true
+      # - traefik.http.routers.http-synapse.middlewares=https_redirect
+      # - traefik.http.routers.https-synapse.entryPoints=https
+      # - traefik.http.routers.https-synapse.rule=Host(`my.matrix.host`)
+      # - traefik.http.routers.https-synapse.service=synapse
+      # - traefik.http.routers.https-synapse.tls=true
+      # - traefik.http.services.synapse.loadbalancer.server.port=8008
+      # - traefik.http.routers.https-synapse.tls.certResolver=le-ssl
 
   db:
     image: docker.io/postgres:10-alpine
